@@ -2,7 +2,9 @@
 
 class MemUtils {
   public static IEnumerable<int> Zeros() {
-    yield return 0;
+    while(true) {
+      yield return 0;
+    }
   }
 }
 
@@ -16,10 +18,10 @@ public record Mem(Seq<int> Prev, int Cur, Seq<int> Next) {
 
 
   // Todo: what does .Tail do on an empty list?  Can we use this with empty starting lists for Prev and Next?
-  public Mem MoveLeft() =>
+  public Mem MoveRight() =>
     new Mem( Prev: Cur.Cons(Prev), Cur: Next.Head.IfNone(0), Next: Next.Tail);
 
-  public Mem MoveRight() =>
+  public Mem MoveLeft() =>
     new Mem( Prev: Prev.Tail, Cur: Prev.Head.IfNone(0), Next: Cur.Cons(Next) );
 
   public Mem Set(int i) =>
