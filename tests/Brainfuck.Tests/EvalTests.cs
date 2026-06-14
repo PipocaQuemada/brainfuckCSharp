@@ -8,22 +8,19 @@ namespace Brainfuck.Tests;
 // Read would block on stdin and Write/Loop touch real IO, so they are out of scope here.
 public class EvalTests
 {
-    // Step/Eval are instance methods that ignore `this`, so any AST value works as the receiver.
-    static readonly AST Receiver = new AST.Incr();
-
     static Mem EmptyTape => new(Seq<int>(), 0, Seq<int>());
 
     // Run a single instruction against a starting tape and return the resulting tape.
     static Mem RunStep(AST instr, Mem start)
     {
-        var (_, final) = Receiver.Step(instr).Run(start).As().Run();
+        var (_, final) = AST.Step(instr).Run(start).As().Run();
         return final;
     }
 
     // Run a program (sequence of instructions) against a starting tape.
     static Mem RunEval(Seq<AST> program, Mem start)
     {
-        var (_, final) = Receiver.Eval(program).Run(start).As().Run();
+        var (_, final) = AST.Eval(program).Run(start).As().Run();
         return final;
     }
 
