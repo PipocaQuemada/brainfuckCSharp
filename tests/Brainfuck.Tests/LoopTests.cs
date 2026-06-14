@@ -54,7 +54,7 @@ public class LoopTests
     // cell -- so `[+]` on a zero cell never terminates. That hangs the whole run (an xUnit
     // Timeout can't reclaim the runaway thread), so this test must not execute as-is.
     // Un-skip it once Loop tests the cell *before* running the body.
-    [Fact(Skip = "Loop is do-while; `[+]` on a zero cell diverges. Un-skip after switching to while-semantics.")]
+    [Fact]
     public void Loop_is_skipped_when_current_cell_is_zero()  // [+] on a zero cell
     {
         var prog = Seq(Loop(Incr()));
