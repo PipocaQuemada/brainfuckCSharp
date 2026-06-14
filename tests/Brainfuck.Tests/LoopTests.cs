@@ -47,13 +47,6 @@ public class LoopTests
         Assert.Equal(6, final.MoveRight().Cur);
     }
 
-    // BF `[` must skip the body when the current cell is 0 (a top-tested while loop), so `[+]`
-    // on a zero cell should leave it at 0.
-    //
-    // SKIPPED: the current Loop evaluator is do-while -- it runs the body *before* testing the
-    // cell -- so `[+]` on a zero cell never terminates. That hangs the whole run (an xUnit
-    // Timeout can't reclaim the runaway thread), so this test must not execute as-is.
-    // Un-skip it once Loop tests the cell *before* running the body.
     [Fact]
     public void Loop_is_skipped_when_current_cell_is_zero()  // [+] on a zero cell
     {
