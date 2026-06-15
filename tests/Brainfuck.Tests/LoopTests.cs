@@ -4,12 +4,12 @@ using static LanguageExt.Prelude;
 namespace Brainfuck.Tests;
 
 // Tests for Loop evaluation. All programs here are pure state (Incr/Decr/Left/Right only),
-// so they run through the StateT<Mem, IO, _> harness without touching real IO.
+// so they run through the StateT<Tape, IO, _> harness without touching real IO.
 public class LoopTests
 {
-    static Mem EmptyTape => new(Seq<byte>(), 0, Seq<byte>());
+    static Tape EmptyTape => new(Seq<byte>(), 0, Seq<byte>());
 
-    static Mem RunEval(Seq<AST> program, Mem start)
+    static Tape RunEval(Seq<AST> program, Tape start)
     {
         var (_, final) = AST.Eval(program).Run(start).As().Run();
         return final;

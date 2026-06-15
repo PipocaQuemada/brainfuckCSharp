@@ -6,4 +6,4 @@
     static AST Loop(params AST[] body) => new AST.Loop(toSeq(body));
 
   var program = Seq(Write(), Incr(), Write(), Incr(), Write(), Incr(), Write(), Decr(), Write());
-  AST.Eval(program).Run(Mem.InitialTape).As().Run();
+  AST.Eval(program).Run(Tape.InitialTape).As().Run();

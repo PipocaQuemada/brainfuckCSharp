@@ -3,22 +3,22 @@ using static LanguageExt.Prelude;
 
 namespace Brainfuck.Tests;
 
-// Tests for the evaluator (AST.Step / AST.Eval) over a StateT<Mem, IO, Unit>.
+// Tests for the evaluator (AST.Step / AST.Eval) over a StateT<Tape, IO, Unit>.
 // Covers only the pure, non-blocking instructions (Incr/Decr and sequences of them).
 // Read would block on stdin and Write/Loop touch real IO, so they are out of scope here.
 public class EvalTests
 {
-    static Mem EmptyTape => new(Seq<byte>(), 0, Seq<byte>());
+    static Tape EmptyTape => new(Seq<byte>(), 0, Seq<byte>());
 
     // Run a single instruction against a starting tape and return the resulting tape.
-    static Mem RunStep(AST instr, Mem start)
+    static Tape RunStep(AST instr, Tape start)
     {
         var (_, final) = AST.Step(instr).Run(start).As().Run();
         return final;
     }
 
     // Run a program (sequence of instructions) against a starting tape.
-    static Mem RunEval(Seq<AST> program, Mem start)
+    static Tape RunEval(Seq<AST> program, Tape start)
     {
         var (_, final) = AST.Eval(program).Run(start).As().Run();
         return final;

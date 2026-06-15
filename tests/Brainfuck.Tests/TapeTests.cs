@@ -3,16 +3,16 @@ using static LanguageExt.Prelude;
 
 namespace Brainfuck.Tests;
 
-// Tests for the immutable tape `Mem`.
+// Tests for the immutable tape `Tape`.
 // Convention assumed (from the field names): Prev = cells to the LEFT (head = nearest left),
 // Cur = the cell under the pointer, Next = cells to the RIGHT (head = nearest right).
 //   `>` / MoveRight : pointer steps right -> new Cur = Next.Head, old Cur pushed onto Prev.
 //   `<` / MoveLeft  : pointer steps left  -> new Cur = Prev.Head, old Cur pushed onto Next.
-public class MemTests
+public class TapeTests
 {
     // A finite, fully-known tape so we never force the infinite InitialTape.
     //   left:  ...2 1   cur: 3   right: 4 5...
-    static Mem Sample() => new(Prev: Seq<byte>(1, 2), Cur: 3, Next: Seq<byte>(4, 5));
+    static Tape Sample() => new(Prev: Seq<byte>(1, 2), Cur: 3, Next: Seq<byte>(4, 5));
 
     [Fact]
     public void MoveRight_brings_nearest_right_cell_under_the_pointer()
@@ -74,7 +74,7 @@ public class MemTests
     [Fact]
     public void Records_with_the_same_contents_are_equal()
     {
-        Assert.Equal(new Mem(Seq<byte>(1, 2), 3, Seq<byte>(4, 5)),
-                     new Mem(Seq<byte>(1, 2), 3, Seq<byte>(4, 5)));
+        Assert.Equal(new Tape(Seq<byte>(1, 2), 3, Seq<byte>(4, 5)),
+                     new Tape(Seq<byte>(1, 2), 3, Seq<byte>(4, 5)));
     }
 }
