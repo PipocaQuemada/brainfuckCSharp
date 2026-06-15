@@ -23,13 +23,13 @@ public class InfiniteTapeTests
     [Fact]
     public void Initial_tape_is_zeros_to_the_right()
     {
-        Assert.Equal(Seq(0, 0, 0, 0, 0), Mem.InitialTape.Next.Take(5));
+        Assert.Equal(Seq<byte>(0, 0, 0, 0, 0), Mem.InitialTape.Next.Take(5));
     }
 
     [Fact]
     public void Initial_tape_is_zeros_to_the_left()
     {
-        Assert.Equal(Seq(0, 0, 0, 0, 0), Mem.InitialTape.Prev.Take(5));
+        Assert.Equal(Seq<byte>(0, 0, 0, 0, 0), Mem.InitialTape.Prev.Take(5));
     }
 
     [Fact]

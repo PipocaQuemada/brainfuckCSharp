@@ -7,7 +7,7 @@ namespace Brainfuck.Tests;
 // so they run through the StateT<Mem, IO, _> harness without touching real IO.
 public class LoopTests
 {
-    static Mem EmptyTape => new(Seq<int>(), 0, Seq<int>());
+    static Mem EmptyTape => new(Seq<byte>(), 0, Seq<byte>());
 
     static Mem RunEval(Seq<AST> program, Mem start)
     {

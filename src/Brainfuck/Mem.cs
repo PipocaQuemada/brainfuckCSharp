@@ -1,14 +1,14 @@
 
 
 class MemUtils {
-  public static IEnumerable<int> Zeros() {
+  public static IEnumerable<byte> Zeros() {
     while(true) {
       yield return 0;
     }
   }
 }
 
-public record Mem(Seq<int> Prev, int Cur, Seq<int> Next) {
+public record Mem(Seq<byte> Prev, byte Cur, Seq<byte> Next) {
 
   // Create an infinite tape of all zeros.  N.B. - this will spin forever if we use anything that forces the whole seq.
   public static Mem InitialTape => 
@@ -24,6 +24,6 @@ public record Mem(Seq<int> Prev, int Cur, Seq<int> Next) {
   public Mem MoveLeft() =>
     new Mem( Prev: Prev.Tail, Cur: Prev.Head.IfNone(0), Next: Cur.Cons(Next) );
 
-  public Mem Set(int i) =>
+  public Mem Set(byte i) =>
     this with { Cur = i };
 }

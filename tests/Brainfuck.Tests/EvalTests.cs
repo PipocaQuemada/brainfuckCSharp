@@ -8,7 +8,7 @@ namespace Brainfuck.Tests;
 // Read would block on stdin and Write/Loop touch real IO, so they are out of scope here.
 public class EvalTests
 {
-    static Mem EmptyTape => new(Seq<int>(), 0, Seq<int>());
+    static Mem EmptyTape => new(Seq<byte>(), 0, Seq<byte>());
 
     // Run a single instruction against a starting tape and return the resulting tape.
     static Mem RunStep(AST instr, Mem start)
