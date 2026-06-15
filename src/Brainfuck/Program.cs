@@ -1,9 +1,9 @@
-﻿    static AST Incr() => new AST.Incr();
-    static AST Decr() => new AST.Decr();
-    static AST Write() => new AST.Write();
-    static AST Left() => new AST.Left();
-    static AST Right() => new AST.Right();
-    static AST Loop(params AST[] body) => new AST.Loop(toSeq(body));
+﻿    static Instruction Incr() => new Instruction.Incr();
+    static Instruction Decr() => new Instruction.Decr();
+    static Instruction Write() => new Instruction.Write();
+    static Instruction Left() => new Instruction.Left();
+    static Instruction Right() => new Instruction.Right();
+    static Instruction Loop(params Instruction[] body) => new Instruction.Loop(toSeq(body));
 
   var program = Seq(Write(), Incr(), Write(), Incr(), Write(), Incr(), Write(), Decr(), Write());
-  AST.Eval(program).Run(Tape.InitialTape).As().Run();
+  Instruction.Eval(program).Run(Tape.InitialTape).As().Run();

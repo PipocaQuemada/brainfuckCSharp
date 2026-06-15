@@ -9,18 +9,18 @@ public class LoopTests
 {
     static Tape EmptyTape => new(Seq<byte>(), 0, Seq<byte>());
 
-    static Tape RunEval(Seq<AST> program, Tape start)
+    static Tape RunEval(Seq<Instruction> program, Tape start)
     {
-        var (_, final) = AST.Eval(program).Run(start).As().Run();
+        var (_, final) = Instruction.Eval(program).Run(start).As().Run();
         return final;
     }
 
     // Convenience builders for readability.
-    static AST Incr() => new AST.Incr();
-    static AST Decr() => new AST.Decr();
-    static AST Left() => new AST.Left();
-    static AST Right() => new AST.Right();
-    static AST Loop(params AST[] body) => new AST.Loop(toSeq(body));
+    static Instruction Incr() => new Instruction.Incr();
+    static Instruction Decr() => new Instruction.Decr();
+    static Instruction Left() => new Instruction.Left();
+    static Instruction Right() => new Instruction.Right();
+    static Instruction Loop(params Instruction[] body) => new Instruction.Loop(toSeq(body));
 
     [Fact]
     public void Loop_clears_a_positive_cell()             // +++[-]

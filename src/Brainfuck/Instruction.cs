@@ -1,12 +1,12 @@
 
-public abstract record AST {
-  public sealed record Incr : AST;
-  public sealed record Decr: AST;
-  public sealed record Left: AST;
-  public sealed record Right: AST;
-  public sealed record Read: AST;
-  public sealed record Write: AST;
-  public sealed record Loop(Seq<AST> Body): AST;
+public abstract record Instruction {
+  public sealed record Incr : Instruction;
+  public sealed record Decr: Instruction;
+  public sealed record Left: Instruction;
+  public sealed record Right: Instruction;
+  public sealed record Read: Instruction;
+  public sealed record Write: Instruction;
+  public sealed record Loop(Seq<Instruction> Body): Instruction;
 
 
   static readonly Stream In  = Console.OpenStandardInput();
@@ -15,7 +15,7 @@ public abstract record AST {
   static IO<Unit> WriteByte(byte b) => IO.lift(() => { Out.WriteByte(b); Out.Flush(); });
   static IO<int>  ReadByte()       => IO.lift(() => In.ReadByte());
 
-  public static StateT<Tape, IO, Unit> Step(AST ast) {
+  public static StateT<Tape, IO, Unit> Step(Instruction ast) {
     return ast switch {
       Incr => StateT.modify<IO, Tape>(m => m with { Cur = (byte)(m.Cur + 1)}),
       Decr => StateT.modify<IO, Tape>(m => m with { Cur = (byte)(m.Cur - 1)}),
@@ -36,7 +36,7 @@ public abstract record AST {
     };
   }
 
-  public static StateT<Tape, IO, Unit> Eval(Seq<AST> code) {
+  public static StateT<Tape, IO, Unit> Eval(Seq<Instruction> code) {
    return Traversable.traverse(c => Step(c), code).As().Select(_ => unit);
   }
  
