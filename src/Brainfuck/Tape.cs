@@ -1,23 +1,13 @@
-
-
-class TapeUtils {
-  public static IEnumerable<byte> Zeros() {
-    while(true) {
-      yield return 0;
-    }
-  }
-}
-
 public record Tape(Seq<byte> Prev, byte Cur, Seq<byte> Next) {
 
-  // Create an infinite tape of all zeros.  N.B. - this will spin forever if we use anything that forces the whole seq.
-  public static Tape InitialTape => 
-    new( Next: toSeq(TapeUtils.Zeros()),
-         Prev: toSeq(TapeUtils.Zeros()),
-         Cur: 0);
+  // A blank tape: the pointer sits on cell 0 with nothing written either side.
+  // Cells outside the written region read as 0 (see MoveLeft/MoveRight), so the tape
+  // only ever holds the cells actually visited -- it stays finite.
+  public static Tape InitialTape =>
+    new(Prev: Seq<byte>(), Cur: 0, Next: Seq<byte>());
 
-
-  // Todo: what does .Tail do on an empty list?  Can we use this with empty starting lists for Prev and Next?
+  // At the edge of the written region there's no cell to step onto, so Head.IfNone(0)
+  // supplies a fresh 0; .Tail of an empty Seq is just empty, so both moves are safe.
   public Tape MoveRight() =>
     new Tape( Prev: Cur.Cons(Prev), Cur: Next.Head.IfNone(0), Next: Next.Tail);
 

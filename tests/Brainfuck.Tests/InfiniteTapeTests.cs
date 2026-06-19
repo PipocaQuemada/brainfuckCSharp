@@ -3,16 +3,9 @@ using static LanguageExt.Prelude;
 
 namespace Brainfuck.Tests;
 
-// Tests for the *infinite* tape (Tape.InitialTape), whose Prev/Next are lazy, never-ending
-// zero-seqs. These exercise the configuration the interpreter actually runs on.
-//
-// SAFETY RULES for everything in this file:
-//   * Only ever inspect `.Cur` (a scalar) or a finite prefix via `.Take(n)`.
-//   * NEVER compare a whole `Tape` or a whole `Seq` for equality against an InitialTape-derived
-//     value -- record/Seq equality would force the infinite seq and hang the runner.
-//   * Because of the two rules above, every test here terminates by construction even if the
-//     tape is genuinely infinite -- no timeout needed.
-public class InfiniteTapeTests
+// Tests for the blank starting tape (Tape.InitialTape). The tape is finite: it holds only the
+// cells actually written, and unwritten cells on either side read as 0.
+public class InitialTapeTests
 {
     [Fact]
     public void Initial_current_cell_is_zero()
@@ -21,15 +14,22 @@ public class InfiniteTapeTests
     }
 
     [Fact]
-    public void Initial_tape_is_zeros_to_the_right()
+    public void Initial_tape_is_empty_to_the_right()
     {
-        Assert.Equal(Seq<byte>(0, 0, 0, 0, 0), Tape.InitialTape.Next.Take(5));
+        Assert.True(Tape.InitialTape.Next.IsEmpty);
     }
 
     [Fact]
-    public void Initial_tape_is_zeros_to_the_left()
+    public void Initial_tape_is_empty_to_the_left()
     {
-        Assert.Equal(Seq<byte>(0, 0, 0, 0, 0), Tape.InitialTape.Prev.Take(5));
+        Assert.True(Tape.InitialTape.Prev.IsEmpty);
+    }
+
+    [Fact]
+    public void Initial_tape_equals_a_blank_tape()
+    {
+        // Whole-tape equality is safe now that the tape is finite (no infinite zero-seq to force).
+        Assert.Equal(new Tape(Seq<byte>(), 0, Seq<byte>()), Tape.InitialTape);
     }
 
     [Fact]
