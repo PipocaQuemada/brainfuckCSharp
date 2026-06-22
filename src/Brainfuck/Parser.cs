@@ -1,7 +1,9 @@
 using LanguageExt.Parsec;
 using Char = LanguageExt.Parsec.Char;
-using static Instruction;
 
+namespace Brainfuck;
+ 
+using static Brainfuck.Instruction;
 public static class Parser {
 
    public static Parser<Seq<Instruction>> ParseBrainfuck =>

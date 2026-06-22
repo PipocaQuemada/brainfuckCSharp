@@ -1,3 +1,5 @@
+namespace Brainfuck;
+
 public record Tape(Seq<byte> Prev, byte Cur, Seq<byte> Next) {
 
   // A blank tape: the pointer sits on cell 0 with nothing written either side.
