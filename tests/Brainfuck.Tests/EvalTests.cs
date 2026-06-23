@@ -13,14 +13,14 @@ public class EvalTests
     // Run a single instruction against a starting tape and return the resulting tape.
     static Tape RunStep(Instruction instr, Tape start)
     {
-        var (_, final) = Instruction.Step(instr).Run(start).As().Run();
+        var (_, final) = Instruction.Step(instr).runApp.Run(start).As().Run();
         return final;
     }
 
     // Run a program (sequence of instructions) against a starting tape.
     static Tape RunEval(Seq<Instruction> program, Tape start)
     {
-        var (_, final) = Instruction.Eval(program).Run(start).As().Run();
+        var (_, final) = Instruction.Eval(program).runApp.Run(start).As().Run();
         return final;
     }
 

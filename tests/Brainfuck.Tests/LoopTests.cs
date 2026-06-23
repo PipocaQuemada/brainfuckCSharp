@@ -11,7 +11,7 @@ public class LoopTests
 
     static Tape RunEval(Seq<Instruction> program, Tape start)
     {
-        var (_, final) = Instruction.Eval(program).Run(start).As().Run();
+        var (_, final) = Instruction.Eval(program).runApp.Run(start).As().Run();
         return final;
     }
 
